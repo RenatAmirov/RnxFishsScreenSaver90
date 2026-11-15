@@ -1,0 +1,96 @@
+<UserControl
+    x:Class="Aquarium90.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    RequestedTheme="Dark">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="AquaInk" Color="#EAFAF2" />
+        <SolidColorBrush x:Key="AquaMuted" Color="#A1BBB9" />
+        <SolidColorBrush x:Key="AquaAccent" Color="#89E7C5" />
+        <SolidColorBrush x:Key="AquaBorder" Color="#29434A" />
+        <SolidColorBrush x:Key="SliderTrackValueFill" Color="#89E7C5" />
+        <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#89E7C5" />
+    </UserControl.Resources>
+    <Grid Background="#091C24" SizeChanged="LayoutChanged">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="32,24,32,25" Spacing="22" MaxWidth="1280">
+                <StackPanel Spacing="8">
+                    <StackPanel Orientation="Horizontal" Spacing="9">
+                        <Ellipse Width="7" Height="7" Fill="{StaticResource AquaAccent}" VerticalAlignment="Center" />
+                        <TextBlock Text="АКВАРИУМ 90  /  ЭКРАННАЯ ЗАСТАВКА" Foreground="{StaticResource AquaAccent}"
+                                   FontSize="11" FontWeight="SemiBold" CharacterSpacing="115" />
+                    </StackPanel>
+                    <TextBlock Text="Разноцветные рыбки" Foreground="{StaticResource AquaInk}"
+                               FontWeight="SemiBold" FontSize="36" TextWrapping="WrapWholeWords" />
+                    <TextBlock Text="Тихий уголок из эпохи ЭЛТ-мониторов."
+                               Foreground="{StaticResource AquaMuted}" FontSize="15" TextWrapping="Wrap" />
+                </StackPanel>
+                <Grid x:Name="Panels" ColumnSpacing="20" RowSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="PreviewColumn" Width="*" />
+                        <ColumnDefinition x:Name="SettingsColumn" Width="292" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="{StaticResource AquaBorder}" BorderThickness="1" CornerRadius="14"
+                            Background="#0C252F" VerticalAlignment="Top">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="PreviewHost" Height="345" Background="#052A36" CornerRadius="13,13,0,0" />
+                            <Grid Grid.Row="1" Padding="15,10">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <Ellipse Width="6" Height="6" Fill="{StaticResource AquaAccent}" />
+                                    <TextBlock Text="ПРЕДПРОСМОТР" FontSize="10" CharacterSpacing="105"
+                                               Foreground="{StaticResource AquaMuted}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <Button x:Name="FullScreen" Click="FullScreenClicked" HorizontalAlignment="Right"
+                                        Background="#16353D" Foreground="{StaticResource AquaInk}" BorderThickness="0"
+                                        Padding="11,6" CornerRadius="6">
+                                    <StackPanel Orientation="Horizontal" Spacing="7">
+                                        <FontIcon Glyph="&#xE740;" FontSize="12" />
+                                        <TextBlock Text="На весь экран" FontSize="12" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border x:Name="OptionsPanel" Grid.Column="1" BorderBrush="{StaticResource AquaBorder}"
+                            BorderThickness="1" CornerRadius="14" Background="#0D2630" Padding="19"
+                            VerticalAlignment="Stretch">
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="Настройки" FontSize="20" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AquaInk}" Margin="0,0,0,6" />
+                            <Grid>
+                                <TextBlock Text="Количество рыб" Foreground="{StaticResource AquaInk}" />
+                                <TextBlock x:Name="FishValue" HorizontalAlignment="Right" Foreground="{StaticResource AquaAccent}" />
+                            </Grid>
+                            <Slider x:Name="Fish" Minimum="6" Maximum="28" StepFrequency="1" IsThumbToolTipEnabled="False"
+                                    AutomationProperties.Name="Количество рыб" ValueChanged="SliderChanged" />
+                            <Grid Margin="0,4,0,0">
+                                <TextBlock Text="Скорость плавания" Foreground="{StaticResource AquaInk}" />
+                                <TextBlock x:Name="SpeedValue" HorizontalAlignment="Right" Foreground="{StaticResource AquaAccent}" />
+                            </Grid>
+                            <Slider x:Name="Speed" Minimum="40" Maximum="160" StepFrequency="5" IsThumbToolTipEnabled="False"
+                                    AutomationProperties.Name="Скорость плавания" ValueChanged="SliderChanged" />
+                            <Border Background="{StaticResource AquaBorder}" Height="1" Margin="0,4" />
+                            <ToggleSwitch x:Name="Bubbles" Header="Пузырьки воздуха" MinWidth="0" OnContent="Вкл." OffContent="Выкл."
+                                          Toggled="BubblesChanged" />
+                            <Button Content="Сохранить настройки" Click="SaveClicked" HorizontalAlignment="Stretch"
+                                    Background="#89E7C5" Foreground="#092D2D" FontWeight="SemiBold" Margin="0,8,0,0"
+                                    BorderThickness="0" CornerRadius="7" Padding="12,8" />
+                            <TextBlock x:Name="Status" TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource AquaMuted}"
+                                       AutomationProperties.LiveSetting="Polite" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <TextBlock Text="Полноэкранный режим закрывается нажатием клавиши или движением мыши."
+                           Foreground="{StaticResource AquaMuted}" FontSize="12" TextWrapping="Wrap" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
